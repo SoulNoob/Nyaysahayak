@@ -6,6 +6,7 @@ const LegalTerm = ({ term, definition }) => {
     return (
         <span
             className="relative inline-block border-b-2 border-dotted border-orange-400 cursor-help group"
+            onClick={() => setShowTooltip(!showTooltip)}
             onMouseEnter={() => setShowTooltip(true)}
             onMouseLeave={() => setShowTooltip(false)}
         >

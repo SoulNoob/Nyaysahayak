@@ -1,20 +1,36 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import ChatInterface from './components/ChatInterface';
 import KnowledgeBrowser from './components/KnowledgeBrowser';
-import DocumentDrafter from './components/DocumentDrafter'; // Added import
+import DocumentDrafter from './components/DocumentDrafter';
 import { analyzeQuery, checkSafety } from './utils/legalBrain';
 import { generateLegalReport } from './utils/reportGenerator';
 
-function App() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [currentMode, setCurrentMode] = useState('chat'); // 'chat', 'knowledge', or 'drafting'
+function AppContent() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [sidebarOpen, setSidebarOpen] = useState(!isMobile);
   const [sessions, setSessions] = useState([]);
   const [currentSessionId, setCurrentSessionId] = useState(null);
   const [isTyping, setIsTyping] = useState(false);
 
-  // Load sessions from localStorage on mount
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Handle Resize
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (mobile) setSidebarOpen(false);
+      else setSidebarOpen(true);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Load sessions
   useEffect(() => {
     const savedSessions = localStorage.getItem('nyaya_sessions');
     if (savedSessions) {
@@ -30,7 +46,7 @@ function App() {
     }
   }, []);
 
-  // Save sessions to localStorage whenever they change
+  // Save sessions
   useEffect(() => {
     if (sessions.length > 0) {
       localStorage.setItem('nyaya_sessions', JSON.stringify(sessions));
@@ -50,7 +66,7 @@ function App() {
     };
     setSessions(prev => [newSession, ...prev]);
     setCurrentSessionId(newSession.id);
-    setCurrentMode('chat');
+    navigate('/'); // Go to chat
   };
 
   const getCurrentMessages = () => {
@@ -72,9 +88,7 @@ function App() {
     updateCurrentSessionMessages(newHistory);
     setIsTyping(true);
 
-    // Simulate network delay
     setTimeout(() => {
-      // 1. Safety Check
       const safetyCheck = checkSafety(text);
       if (!safetyCheck.safe) {
         updateCurrentSessionMessages([...newHistory, { role: 'ai', content: safetyCheck.message, contextUsed: false }]);
@@ -82,9 +96,7 @@ function App() {
         return;
       }
 
-      // 2. Analyze Query
       const analysis = analyzeQuery(text, currentMessages);
-
       let responseContent = "";
 
       if (analysis.results.length > 0) {
@@ -93,24 +105,14 @@ function App() {
           responseContent = `I couldn't find a specific match in my local cache. However, you can search these comprehensive databases:\n\n${topResult.externalUrls.map(link => `• [${link.label}](${link.url})`).join('\n')}`;
         } else {
           responseContent = `Based on **${topResult.source}**, specifically **${topResult.section} (${topResult.title})**:\n\n"${topResult.text}"\n\n**LEGAL REMEDY:**\n${topResult.remedy}\n\n**RECOMMENDED STEPS:**\n${topResult.steps.map(step => `• ${step}`).join('\n')}`;
-
-          if (topResult.evidence && topResult.evidence.length > 0) {
-            responseContent += `\n\n**EVIDENCE COLLECTION (HOW TO PROVE):**\n${topResult.evidence.map(e => `• ${e}`).join('\n')}`;
-          }
-
+          if (topResult.evidence && topResult.evidence.length > 0) responseContent += `\n\n**EVIDENCE COLLECTION (HOW TO PROVE):**\n${topResult.evidence.map(e => `• ${e}`).join('\n')}`;
           if (topResult.caseLaws && topResult.caseLaws.length > 0) {
             responseContent += `\n\n**RELEVANT CASE LAWS:**\n${topResult.caseLaws.map(c => {
-              // Remove parentheses to prevent markdown regex breakage
               const safeQuery = c.replace(/[()]/g, '');
               return `• [${c}](https://www.google.com/search?q=${encodeURIComponent(safeQuery + " supreme court judgment")})`;
             }).join('\n')}`;
           }
-
-          if (analysis.results.length > 1 && !analysis.results[1].isExternal) {
-            responseContent += `\n\n**ALSO RELEVANT:**\nSee ${analysis.results[1].section} of ${analysis.results[1].source}.`;
-          }
-
-          // Add general search links
+          if (analysis.results.length > 1 && !analysis.results[1].isExternal) responseContent += `\n\n**ALSO RELEVANT:**\nSee ${analysis.results[1].section} of ${analysis.results[1].source}.`;
           responseContent += `\n\n**FURTHER RESEARCH:**\n• [Google Search](https://www.google.com/search?q=${encodeURIComponent(text + " indian law")})\n• [India Code](https://www.indiacode.nic.in/)\n• [Constitution of India](https://legislative.gov.in/constitution-of-india/)`;
         }
       } else {
@@ -127,38 +129,49 @@ function App() {
       <Sidebar
         isOpen={sidebarOpen}
         toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-        currentMode={currentMode}
-        setMode={setCurrentMode}
         sessions={sessions}
         currentSessionId={currentSessionId}
-        setCurrentSessionId={setCurrentSessionId}
+        setCurrentSessionId={(id) => { setCurrentSessionId(id); navigate('/'); }}
         startNewChat={createNewSession}
+        // No longer passing setMode, Sidebar will use Links or we pass navigation functions
+        navigate={navigate}
+        currentPath={location.pathname}
       />
 
-      <div className={`flex-1 flex flex-col transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-16'}`}>
+      <div className={`flex-1 flex flex-col transition-all duration-300 ${isMobile ? 'ml-0' : sidebarOpen ? 'ml-64' : 'ml-16'}`}>
         <Header
-          currentMode={currentMode}
+          currentMode={location.pathname === '/' ? 'chat' : location.pathname.substring(1)}
           handlePrintReport={() => generateLegalReport(getCurrentMessages())}
         />
 
         <main className="flex-1 overflow-hidden relative">
-          {currentMode === 'chat' ? (
-            <ChatInterface
-              history={getCurrentMessages()}
-              onSendMessage={handleSendMessage}
-              isTyping={isTyping}
-            />
-          ) : currentMode === 'knowledge' ? (
-            <div className="h-full overflow-y-auto custom-scrollbar">
-              <KnowledgeBrowser />
-            </div>
-          ) : currentMode === 'drafting' ? ( // Added drafting mode rendering
-            <DocumentDrafter onBack={() => setCurrentMode('chat')} />
-          ) : null}
+          <Routes>
+            <Route path="/" element={
+              <ChatInterface
+                history={getCurrentMessages()}
+                onSendMessage={handleSendMessage}
+                isTyping={isTyping}
+              />
+            } />
+            <Route path="/knowledge" element={
+              <div className="h-full overflow-y-auto custom-scrollbar">
+                <KnowledgeBrowser />
+              </div>
+            } />
+            <Route path="/draft" element={
+              <DocumentDrafter onBack={() => navigate('/')} />
+            } />
+          </Routes>
         </main>
       </div>
     </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
+}

@@ -1,0 +1,22 @@
+{
+    "name": "NyayaSahayak - AI Legal Counsel",
+    "short_name": "NyayaSahayak",
+    "description": "Your Personal AI Legal Assistant for Indian Laws.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#020617",
+    "theme_color": "#f97316",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "/vite.svg",
+            "sizes": "192x192",
+            "type": "image/svg+xml"
+        },
+        {
+            "src": "/vite.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml"
+        }
+    ]
+}
