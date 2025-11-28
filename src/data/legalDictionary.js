@@ -1,0 +1,22 @@
+export const LEGAL_TERMS = {
+    "writ": "A formal written order issued by a court (like the Supreme Court or High Court) commanding someone to do or stop doing something.",
+    "cognizable": "A serious category of offense (like murder or theft) where the police can arrest without a warrant and start an investigation without court permission.",
+    "bailable": "Offenses where the accused has the right to be released on bail after paying a bond. The police cannot refuse bail in these cases.",
+    "non-bailable": "Serious offenses where bail is not a right but a privilege granted by the court at its discretion.",
+    "fir": "First Information Report. A written document prepared by police when they receive information about a cognizable offense.",
+    "affidavit": "A written statement confirmed by oath or affirmation, for use as evidence in court.",
+    "plaintiff": "The person who brings a case against another in a court of law.",
+    "defendant": "The person, company, or institution being sued or accused in a court of law.",
+    "petition": "A formal written request, typically one signed by many people, appealing to authority with respect to a particular cause.",
+    "jurisdiction": "The official power to make legal decisions and judgments. Also refers to the territory over which a court has authority.",
+    "tort": "A wrongful act or an infringement of a right (other than under contract) leading to civil legal liability.",
+    "sub-judice": "Under judicial consideration and therefore prohibited from public discussion elsewhere.",
+    "stay order": "An order by a court to stop a judicial proceeding or a specific action temporarily.",
+    "injunction": "A judicial order that restrains a person from beginning or continuing an action threatening or invading the legal right of another.",
+    "power of attorney": "A legal document giving one person (the agent or attorney-in-fact) the power to act for another person (the principal).",
+    "vakalatnama": "A document by which a client authorizes an advocate to represent them in a case.",
+    "anticipatory bail": "Bail granted to a person in anticipation of an arrest, ensuring they are released immediately if arrested.",
+    "charge sheet": "A final report prepared by the police after investigation, submitted to the court, listing the charges against the accused.",
+    "decree": "An official order issued by a legal authority, usually a judge, resolving a dispute.",
+    "summons": "An official order to appear before a judge or magistrate."
+};
