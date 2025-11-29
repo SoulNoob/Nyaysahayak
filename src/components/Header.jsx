@@ -1,15 +1,18 @@
 import React from 'react';
-import { Printer, ShieldCheck } from 'lucide-react';
+import { Printer, Scale } from 'lucide-react';
 
 const Header = ({ currentMode, handlePrintReport }) => {
     return (
         <header className="sticky top-0 z-10 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
                 <div className="bg-orange-500/10 p-2 rounded-full text-orange-500">
-                    <ShieldCheck size={24} />
+                    <Scale size={24} />
                 </div>
                 <div>
-                    <h1 className="text-xl font-bold text-slate-100">NyayaSahayak</h1>
+                    <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2">
+                        NyayaSahayak
+                        <span className="text-[10px] bg-orange-500/20 text-orange-400 px-1.5 py-0.5 rounded border border-orange-500/30 font-mono">v1.1 Cloud</span>
+                    </h1>
                     <p className="text-xs text-slate-400">AI Legal Counsel • {currentMode === 'chat' ? 'Active Consultation' : 'Knowledge Browser'}</p>
                 </div>
             </div>
