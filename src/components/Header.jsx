@@ -20,7 +20,7 @@ const Header = ({ currentMode, handlePrintReport }) => {
                     className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 transition-all text-sm font-medium"
                 >
                     <Printer size={16} />
-                    <span>Print Official Report</span>
+                    <span className="hidden md:inline">Print Official Report</span>
                 </button>
             )}
         </header>

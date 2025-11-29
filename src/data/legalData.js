@@ -488,5 +488,16 @@ export const OFFICIAL_LEGAL_DATA = [
         remedy: "Imprisonment up to 7 years (or death if on active service).",
         steps: ["Report AWOL.", "Apprehend deserter.", "Court Martial."],
         evidence: ["Roll call reports.", "Apprehension report.", "Service book."]
+    },
+    {
+        id: "bns_137",
+        source: "Bharatiya Nyaya Sanhita (BNS) 2023",
+        section: "Section 137",
+        title: "Kidnapping",
+        text: "Whoever takes or entices any minor under sixteen years of age if a male, or under eighteen years of age if a female... out of the keeping of the lawful guardian...",
+        keywords: ["kidnapping", "missing child", "lost child", "abduction", "missing person", "lost", "found"],
+        remedy: "Imprisonment up to 7 years and fine.",
+        steps: ["Call 112 immediately.", "File Missing Person Report (FIR).", "Upload details on TrackChild portal.", "Check nearby CCTV."],
+        evidence: ["Recent photo of child.", "Last seen location.", "CCTV footage.", "Witness statements."]
     }
 ];

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">NyayaSahayak</string>
+    <string name="title_activity_main">NyayaSahayak</string>
+    <string name="package_name">com.aryancodesit.nyayasahayak</string>
+    <string name="custom_url_scheme">com.aryancodesit.nyayasahayak</string>
+</resources>
