@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 
 export default async function handler(req, res) {
     // 1. CORS Setup (Allow requests from your frontend)
@@ -42,7 +42,25 @@ GUIDELINES:
 3. SAFETY: For self-harm, violence, or immediate danger, provide emergency numbers (112) immediately and refuse to help with illegal acts.
 4. CITATIONS: Always cite specific Sections/Articles (e.g., "Section 137 of BNS 2023").
 5. FORMATTING: Use Markdown. Use **bold** for key terms. Use bullet points for steps.
-6. DISCLAIMER: End with "I am an AI, not a lawyer. Please consult a professional."`
+6. DISCLAIMER: End with "I am an AI, not a lawyer. Please consult a professional."`,
+            safetySettings: [
+                {
+                    category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+                    threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+                },
+                {
+                    category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+                    threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+                },
+                {
+                    category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                    threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+                },
+                {
+                    category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+                    threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+                },
+            ],
         });
 
         // Convert frontend message format to Gemini format
